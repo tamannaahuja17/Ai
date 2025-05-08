@@ -1,0 +1,189 @@
+// sum of variable
+sum(X,Y,Z):- Z is X+Y.
+
+
+
+//max 
+max(X,Y,M):- X>Y, M is X.
+max(_,Y,M):- M is Y.
+
+
+
+
+//factorial 
+fact(0,1).
+fact(N,X):- 
+	N1 is N-1,
+	fact(N1,X1),
+	X is X1 * N.
+
+
+
+//Fibonacci
+fibonacci(0,0).
+fibonacci(1,1).
+fibonacci(N,T):- 
+	N>1,
+	N1 is N - 1,
+	N2 is N -2,
+	fibonacci(N1,T1),
+	fibonacci(N2,T2),
+	T is T1 + T2.
+
+
+
+
+
+
+//power
+power(Num, Pow, Ans):- Ans is Num ** Pow.
+
+
+
+
+
+//multiply
+multiply(N1,N2,R):- R is N1 * N2.
+
+
+
+
+
+//if X is the member of L list
+memb(X,[X|_]).
+memb(X,[_|T]):-
+	memb(X,T).
+
+
+
+
+
+
+//sum of list
+sumlist([], 0).
+sumlist([H|T], S) :-
+    sumlist(T, R1),
+    S is H + R1.
+
+
+
+//odd even check 
+evenlength([]).
+odddlength([_]).
+
+evenlength([_,_|T]):- evenlength(T).
+oddlength([_,_|T]):- oddlength(T).
+
+
+
+//max element of list maxlist
+maxlist([X],X).
+maxlist([H|T],M):-
+	maxlist(T,M1),
+	M is max(H,M1).
+
+
+//insert element in list
+insert(I, 1, L, [I|L]).
+insert(I, N, [H|T], [H|R]) :-
+    N > 1,
+    N1 is N - 1,
+    insert(I, N1, T, R).
+
+
+
+
+
+//delete element from list
+delete(1, [_|T], T).
+delete(N, [H|T], [H|R]) :-
+    N > 1,
+    N1 is N - 1,
+    delete(N1, T, R).
+
+
+
+//concatenate l1 l2 to get l3
+conc([], L2, L2).
+conc([H|T], L2, [H|R]) :-
+	conc(T,L2,R).
+
+
+
+//reverse the list
+reverse([], []).
+reverse([H|T], R) :-
+    reverse(T, RT),
+    append(RT, [H], R).
+
+
+
+//family tree
+% Facts
+male(john).
+male(paul).
+male(mike).
+male(tom).
+male(sam).
+
+female(lisa).
+female(susan).
+female(mary).
+female(anna).
+female(kate).
+
+father(john, paul).
+father(john, mary).
+father(paul, mike).
+father(paul, anna).
+father(sam, kate).
+
+mother(lisa, paul).
+mother(lisa, mary).
+mother(mary, mike).
+mother(mary, anna).
+mother(susan, kate).
+
+% Rules
+parent(X, Y) :- father(X, Y).
+parent(X, Y) :- mother(X, Y).
+
+sibling(X, Y) :-
+    parent(Z, X),
+    parent(Z, Y),
+    X \= Y.
+
+brother(X, Y) :-
+    sibling(X, Y),
+    male(X).
+
+sister(X, Y) :-
+    sibling(X, Y),
+    female(X).
+
+grandparent(X, Y) :-
+    parent(X, Z),
+    parent(Z, Y).
+
+grandfather(X, Y) :-
+    grandparent(X, Y),
+    male(X).
+
+grandmother(X, Y) :-
+    grandparent(X, Y),
+    female(X).
+
+child(X, Y) :- parent(Y, X).
+
+uncle(X, Y) :-
+    parent(Z, Y),
+    brother(X, Z).
+
+aunt(X, Y) :-
+    parent(Z, Y),
+    sister(X, Z).
+
+cousin(X, Y) :-
+    parent(P1, X),
+    parent(P2, Y),
+    sibling(P1, P2).
